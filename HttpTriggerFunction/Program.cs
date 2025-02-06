@@ -6,35 +6,27 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 
 var builder = FunctionsApplication.CreateBuilder(args);
-
-// Application Insights isn't enabled by default. See https://aka.ms/AAt8mw4.
-// builder.Services
-//     .AddApplicationInsightsTelemetryWorkerService()
-//     .ConfigureFunctionsApplicationInsights();
-
+//builder.UseMiddleware();
 builder.Build().Run();
 
 
-
-public class HttpExample
+public class HttpTriggerFunction
 {
-    private readonly ILogger<HttpExample> _logger;
+    private readonly ILogger<HttpTriggerFunction> _logger;
 
-    public HttpExample(ILogger<HttpExample> logger)
+    public HttpTriggerFunction(ILogger<HttpTriggerFunction> logger)
     {
         _logger = logger;
     }
 
     [Function("HttpExample")]
-    public static HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
+    public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestData req,
         FunctionContext executionContext)
     {
-        var logger = executionContext.GetLogger("HttpExample");
-        logger.LogInformation("message logged");
+        _logger.LogInformation("Hello world");
 
         var response = req.CreateResponse(HttpStatusCode.OK);
-        response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
-        response.WriteString("Welcome to .NET isolated worker !!");
+        response.WriteString("Hello world");
 
         return response;
     }
