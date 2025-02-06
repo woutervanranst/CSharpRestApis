@@ -11,11 +11,11 @@ app.Run();
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class HelloController : ControllerBase
 {
-    private readonly ILogger<WeatherForecastController> _logger;
+    private readonly ILogger<HelloController> _logger;
 
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    public HelloController(ILogger<HelloController> logger)
     {
         _logger = logger;
     }
